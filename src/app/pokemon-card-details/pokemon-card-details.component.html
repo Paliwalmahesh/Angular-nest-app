@@ -2,7 +2,13 @@
   <img class="card-img-top px-auto" src="{{ pokemon.imageUrl }}" alt="Card image cap" />
   <div class="card-body px-auto">
     <h5 class="card-title">{{ pokemon.name }}</h5>
-    <p class="card-text">{{ pokemon.speciality.name }}</p>
+    <ul>
+      
+    <li *ngFor ="let pokemonPowerModelInstance of pokemonPowerModel ">
+{{ pokemonPowerModelInstance.id }}
+{{ pokemonPowerModelInstance.name }}
+    </li></ul>
+   
     <button class="btn btn-primary" (click)="goBack()">Go back</button>
   </div>
 </div>

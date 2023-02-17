@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PokemonModel } from '../model/pokemon.model';
+import { PokemonModel, PokemonPowerModel } from '../model/pokemon.model';
 import { PokemonService } from '../services/pokemon.service';
 import { Location } from '@angular/common';
 
@@ -11,7 +11,9 @@ import { Location } from '@angular/common';
 })
 export class PokemonCardDetailsComponent {
   pokemon: PokemonModel;
-  id: number;
+  pokemonPowerModel: PokemonPowerModel[];
+  // powers=
+  id: string;
   setError: boolean = false;
   errorMsg: string = '';
 
@@ -22,19 +24,25 @@ export class PokemonCardDetailsComponent {
   ) {
     this.pokemon = {
       name: '',
-      speciality: {
-        id: 0,
-        name: '',
-      },
       imageUrl: '',
     };
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.pokemonPowerModel = [];
+    this.id = String(this.route.snapshot.paramMap.get('id'));
   }
   ngOnInit() {
+    this.pokemonServices.getPowerId(this.id).subscribe({
+      next: (response) => {
+        this.pokemonPowerModel = response;
+        console.log(this.pokemonPowerModel);
+      },
+      error: (error) => {
+        this.setError = true;
+        this.errorMsg = error.message;
+      },
+    });
     this.pokemonServices.getPokemon(this.id).subscribe({
       next: (response) => {
         this.pokemon = response;
-        console.log(this.pokemon);
       },
       error: (error) => {
         this.setError = true;

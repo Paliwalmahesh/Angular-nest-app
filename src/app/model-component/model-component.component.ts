@@ -61,7 +61,7 @@ export class NgbdModalContent {
   addPokemon() {
     let pokemonobj: pokemonCreate = {
       name: this.name.value,
-      specialityId: this.speciality.value,
+      power: [`${this.speciality.value}`],
       imageUrl: this.imageUrl.value,
     };
     this.pokemonServices.savePokemon(pokemonobj).subscribe({
